@@ -81,6 +81,41 @@
         </v-timeline>
       </v-container>
 
+      <v-container id="map" class="py-16">
+        <h2 class="text-h4 text-center mb-10 font-weight-bold">{{ $t('map.title') }}</h2>
+        <v-card elevation="8" class="rounded-lg overflow-hidden mx-auto" style="max-width: 900px;">
+          <v-responsive :aspect-ratio="16/9">
+            <iframe src="https://www.google.com/maps/d/embed?mid=1mhgIDCgasQXd1yb3w8KG3mldgNI1ToM&usp&noprof=1" width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+          </v-responsive>
+          <v-card-actions class="pa-4 bg-white">
+            <v-icon color="primary" class="mr-2">mdi-information-outline</v-icon>
+            <span class="text-caption">{{ $t('map.tip') }}</span>
+            <v-spacer />
+            <v-btn variant="text" color="primary" prepend-icon="mdi-map-marker" href="https://maps.google.com" target="_blank">{{ $t('map.openBtn') }}</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-container>
+
+      <v-container class="py-16">
+        <v-row justify="center">
+          <v-col cols="12" md="10" lg="8">
+            <h2 class="text-h4 text-center mb-10 font-weight-bold">{{ $t('video.title') }}</h2>
+      
+            <v-responsive :aspect-ratio="16/9" class="elevation-12 rounded-lg overflow-hidden">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/jANEtHV4K90?rel=0"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+            </v-responsive>
+          </v-col>
+        </v-row>
+      </v-container>
+
       <v-sheet color="grey-lighten-4" class="py-16">
         <v-container>
           <p class="text-center text-overline mb-8 text-grey">{{ $t('sponsors.title') }}</p>

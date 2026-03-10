@@ -21,6 +21,12 @@ const messages = {
       links: 'Quick Links',
       schoolWeb: 'School Website',
       privacy: 'Privacy Policy'
+    },
+    video: { title: 'promotional video'},
+    map: { 
+      title: 'Route Map',
+      tip: 'Tip: Zoom to view Checkpoints',
+      openBtn: 'Open in Google Maps'
     }
   },
   zh: {
@@ -43,6 +49,12 @@ const messages = {
       links: '快速連結',
       schoolWeb: '學校官網',
       privacy: '隱私政策'
+    },
+    video: { title: '活動宣傳片'},
+    map: { 
+      title: '路線地圖',
+      tip: '提示：可縮放查看詳細站點',
+      openBtn: '開啟 Google 地圖'
     }
   }
 }
