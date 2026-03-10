@@ -1,0 +1,36 @@
+# 1. 依賴套件 (最重要，絕對唔可以 push)
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# 2. 編輯器相關檔案
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 3. 系統暫存檔
+.DS_Store
+thumbs.db
+desktop.ini
+
+# 4. 紀錄檔
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 5. 環境變數 (如果你遲啲有用 .env 嚟擺 API Key，記得唔好 push)
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# 6. TypeScript 編譯紀錄
+tsconfig.tsbuildinfo
