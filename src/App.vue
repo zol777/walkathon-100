@@ -8,6 +8,8 @@
       <div class="d-none d-md-flex">
         <v-btn variant="text" @click="scrollTo('#details')">{{ $t('nav.details') }}</v-btn>
         <v-btn variant="text" @click="scrollTo('#route')">{{ $t('nav.route') }}</v-btn>
+        <v-btn variant="text" @click="scrollTo('#map')">{{ $t('nav.map') }}</v-btn>
+        <v-btn variant="text" @click="scrollTo('#video')">{{ $t('nav.video') }}</v-btn>
       </div>
 
       <v-btn icon @click="toggleLang" class="ml-2">
@@ -19,6 +21,8 @@
       <v-list>
         <v-list-item @click="scrollTo('#details')" :title="$t('nav.details')" />
         <v-list-item @click="scrollTo('#route')" :title="$t('nav.route')" />
+        <v-list-item @click="scrollTo('#map')" :title="$t('nav.map')" />
+        <v-list-item @click="scrollTo('#video')" :title="$t('nav.video')" />
         <v-divider />
         <v-list-item 
           prepend-icon="mdi-translate" 
@@ -32,7 +36,7 @@
       <v-hover v-slot="{ isHovering, props }">
         <v-img
           v-bind="props"
-          src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80" 
+          src="@/assets/cover.jpg"
           height="500"
           cover
           class="align-center text-center text-white w-100"
@@ -43,8 +47,11 @@
                 {{ $t('hero.title') }}
               </h1>
               <p class="text-h5 mb-8">{{ $t('hero.subtitle') }}</p>
-              <v-btn size="x-large" color="primary" rounded="xl" elevation="4" class="px-8">
-                {{ $t('hero.btn') }}
+
+              <v-btn size="x-large" color="secondary" rounded="xl" elevation="4" class="px-8 ma-2"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSciOMbBYIwiTUIwAxVXPeHMU5StFFE_Lkb-VV4AnI0hn6P3Ag/viewform?usp=header" target="_blank">
+                      <v-icon start>mdi-upload</v-icon>
+                      {{ $t('hero.btn') }}
               </v-btn>
             </v-container>
           </div>
@@ -55,7 +62,7 @@
         <h2 class="text-h4 mb-6 font-weight-bold">{{ $t('nav.details') }}</h2>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <p class="text-body-1 text-grey-darken-1">（呢度可以放活動詳情內容...）</p>
+            <p class="text-body-1 text-grey-darken-1">（{{ $t('details.caption') }}）</p>
           </v-col>
         </v-row>
       </v-container>
@@ -96,7 +103,7 @@
         </v-card>
       </v-container>
 
-      <v-container class="py-16">
+      <v-container class="py-16" id="video">
         <v-row justify="center">
           <v-col cols="12" md="10" lg="8">
             <h2 class="text-h4 text-center mb-10 font-weight-bold">{{ $t('video.title') }}</h2>
@@ -181,7 +188,6 @@ const toggleLang = () => {
 const scrollTo = (id: string) => {
   const el = document.querySelector(id) as HTMLElement | null
   if (el) {
-    // 64px 係導航欄的高度
     window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' })
   }
   drawer.value = false
@@ -189,14 +195,13 @@ const scrollTo = (id: string) => {
 </script>
 
 <style scoped>
-/* 修正 Padding 問題：確保 Hero Image 貼邊 */
+
 .v-main {
   padding-top: 0 !important;
 }
 .w-100 {
   width: 100% !important;
 }
-/* 讓導航按鈕點擊時更有質感 */
 .text-left {
   text-align: left !important;
   justify-content: flex-start !important;

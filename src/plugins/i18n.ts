@@ -2,7 +2,8 @@ import { createI18n } from 'vue-i18n'
 
 const messages = {
   en: {
-    nav: { details: 'Details', route: 'Route' },
+    nav: { details: 'Details', route: 'Route' , map: 'Map', video: 'Promotional Video'},
+    details:{ caption: 'The 2027 School Walkathon will be held on October 1, 2027. All students, teachers, and parents are encouraged to join us for a day of fun and fundraising!' },
     hero: { 
       title: 'School Walkathon 2027', 
       subtitle: 'Walking together for a better future',
@@ -30,7 +31,8 @@ const messages = {
     }
   },
   zh: {
-    nav: { details: '活動詳情', route: '活動路線' },
+    nav: { details: '活動詳情', route: '活動路線', map: '路線地圖', video: '活動宣傳片'},
+    details: { caption: '2027 學校步行籌款活動將於 2027 年 10 月 1 日舉行，歡迎全校師生及家長踴躍參加！'},
     hero: { 
       title: '2027 學校步行籌款', 
       subtitle: '攜手同行，共創未來',
