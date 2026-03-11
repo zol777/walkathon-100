@@ -200,6 +200,7 @@ const photos = [
   new URL('@/assets/cover-04.jpg', import.meta.url).href,
   new URL('@/assets/cover-05.jpg', import.meta.url).href,
   new URL('@/assets/cover-06.jpg', import.meta.url).href,
+  new URL('@/assets/cover-07.jpg', import.meta.url).href,
 ]
 </script>
 
