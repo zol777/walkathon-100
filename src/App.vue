@@ -33,30 +33,30 @@
     </v-navigation-drawer>
 
     <v-main>
-      <v-hover v-slot="{ isHovering, props }">
-        <v-img
-          v-bind="props"
-          src="@/assets/cover.jpg"
-          height="500"
-          cover
-          class="align-center text-center text-white w-100"
-        >
-          <div class="fill-height d-flex align-center justify-center" style="background: rgba(0,0,0,0.4)">
-            <v-container>
+      <v-carousel height="500" hide-delimiter-background show-arrows="hover" cycle :interval="7500" class="w-100"
+        hide-delimiters transition="fade" reverse-transition="fade">
+        <template v-slot:default>
+          <v-carousel-item v-for="(photo, index) in photos" :key="index" :src="photo" cover
+            transition="fade-transition"></v-carousel-item>
+
+          <div class="fill-height d-flex align-center justify-center w-100"
+            style="background: rgba(0,0,0,0.3); position: absolute; top: 0; left: 0; z-index: 2;">
+            <v-container class="text-center text-white">
               <h1 class="text-h2 font-weight-bold mb-4 animate__animated animate__fadeInDown">
                 {{ $t('hero.title') }}
               </h1>
               <p class="text-h5 mb-8">{{ $t('hero.subtitle') }}</p>
 
               <v-btn size="x-large" color="secondary" rounded="xl" elevation="4" class="px-8 ma-2"
-                href="https://docs.google.com/forms/d/e/1FAIpQLSciOMbBYIwiTUIwAxVXPeHMU5StFFE_Lkb-VV4AnI0hn6P3Ag/viewform?usp=header" target="_blank">
-                      <v-icon start>mdi-upload</v-icon>
-                      {{ $t('hero.btn') }}
+                href="https://docs.google.com/forms/d/e/1FAIpQLSciOMbBYIwiTUIwAxVXPeHMU5StFFE_Lkb-VV4AnI0hn6P3Ag/viewform?usp=header"
+                target="_blank">
+                <v-icon start>mdi-upload</v-icon>
+                {{ $t('hero.btn') }}
               </v-btn>
             </v-container>
           </div>
-        </v-img>
-      </v-hover>
+        </template>
+      </v-carousel>
 
       <v-container id="details" class="py-16 text-center">
         <h2 class="text-h4 mb-6 font-weight-bold">{{ $t('nav.details') }}</h2>
@@ -192,6 +192,15 @@ const scrollTo = (id: string) => {
   }
   drawer.value = false
 }
+
+const photos = [
+  new URL('@/assets/cover-01.jpg', import.meta.url).href,
+  new URL('@/assets/cover-02.jpg', import.meta.url).href,
+  new URL('@/assets/cover-03.jpg', import.meta.url).href,
+  new URL('@/assets/cover-04.jpg', import.meta.url).href,
+  new URL('@/assets/cover-05.jpg', import.meta.url).href,
+  new URL('@/assets/cover-06.jpg', import.meta.url).href,
+]
 </script>
 
 <style scoped>
@@ -205,5 +214,18 @@ const scrollTo = (id: string) => {
 .text-left {
   text-align: left !important;
   justify-content: flex-start !important;
+}
+
+/* 強化淡入淡出效果，令佢更 Slow 同更 Smooth */
+:deep(.v-window-item--active) {
+  transition: opacity 1.5s ease-in-out !important;
+}
+
+:deep(.v-window__container) {
+  transition: none !important; /* 停用原本嘅左右滑動動畫 */
+}
+
+.w-100 {
+  width: 100% !important;
 }
 </style>
