@@ -47,7 +47,7 @@
               </h1>
               <p class="text-h5 mb-8">{{ $t('hero.subtitle') }}</p>
 
-              <v-btn size="x-large" color="secondary" rounded="xl" elevation="4" class="px-8 ma-2"
+              <v-btn size="x-large" color="secondary" rounded="xl" elevation="4" class="px-8 ma-2 pulse-btn"
                 href="https://docs.google.com/forms/d/e/1FAIpQLSciOMbBYIwiTUIwAxVXPeHMU5StFFE_Lkb-VV4AnI0hn6P3Ag/viewform?usp=header"
                 target="_blank">
                 <v-icon start>mdi-upload</v-icon>
@@ -228,5 +228,57 @@ const photos = [
 
 .w-100 {
   width: 100% !important;
+}
+
+/* 1. 按鈕整體的脈衝效果 (主要係發光同輕微放大) */
+.pulse-btn {
+  animation: pulse 2s infinite;
+  transform-origin: center center;
+  /* 確保從中心放大 */
+}
+
+/* 2. 針對 Icon 的跳動效果 (更明顯的縮放) */
+.icon-pulse {
+  animation: icon-jump 1s infinite alternate;
+  /* 來回跳動 */
+}
+
+/* --- 動畫定義 (Keyframes) --- */
+
+/* 按鈕總體 Pulse：主要是陰影擴散，令掣望落更「浮」 */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--v-theme-secondary), 0.7);
+    /* 開始時無陰影 */
+    transform: scale(1);
+    /* 原始大小 */
+  }
+
+  70% {
+    box-shadow: 0 0 0 15px rgba(var(--v-theme-secondary), 0);
+    /* 擴散並變透明 */
+    transform: scale(1.03);
+    /* 輕微放大 */
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--v-theme-secondary), 0);
+    /* 陰影消失 */
+    transform: scale(1);
+    /* 回復大小 */
+  }
+}
+
+/* Icon 跳動：更明顯的縮放，增加動感 */
+@keyframes icon-jump {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.3);
+  }
+
+  /* 縮放 30% */
 }
 </style>
