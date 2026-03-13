@@ -7,6 +7,7 @@
       
       <div class="d-none d-md-flex">
         <v-btn variant="text" @click="scrollTo('#details')">{{ $t('nav.details') }}</v-btn>
+        <v-btn variant="text" @click="scrollTo('#interactive-map')">{{ $t('nav.renovation') }}</v-btn>
         <v-btn variant="text" @click="scrollTo('#route')">{{ $t('nav.route') }}</v-btn>
         <v-btn variant="text" @click="scrollTo('#map')">{{ $t('nav.map') }}</v-btn>
         <v-btn variant="text" @click="scrollTo('#video')">{{ $t('nav.video') }}</v-btn>
@@ -20,6 +21,7 @@
     <v-navigation-drawer v-model="drawer" temporary>
       <v-list>
         <v-list-item @click="scrollTo('#details')" :title="$t('nav.details')" />
+        <v-list-item @click="scrollTo('#interactive-map')" :title="$t('nav.renovation')" />
         <v-list-item @click="scrollTo('#route')" :title="$t('nav.route')" />
         <v-list-item @click="scrollTo('#map')" :title="$t('nav.map')" />
         <v-list-item @click="scrollTo('#video')" :title="$t('nav.video')" />
@@ -69,6 +71,51 @@
         </v-row>
       </v-container>
 
+      <v-sheet color="grey-lighten-5" class="py-16" id="interactive-map">
+        <v-container>
+          <h2 class="text-h4 text-center mb-10 font-weight-bold">{{ $t('nav.renovation') }}</h2>
+          <div class="interactive-map-wrapper mx-auto elevation-10 rounded-lg bg-white">
+
+            <v-img :src="schoolMapImg" cover class="w-100 base-map"></v-img>
+
+            <div v-for="spot in hotspots" :key="spot.id" class="hotspot-trigger"
+              :style="{ top: spot.top, left: spot.left }">
+              <v-btn icon size="small" color="primary" class="marker-pulse-effect" @click="openSpot(spot)">
+                <span class="text-button font-weight-black">{{ spot.id }}</span>
+              </v-btn>
+            </div>
+          </div>
+        </v-container>
+      </v-sheet>
+
+      <v-dialog v-model="dialog" max-width="1000" transition="dialog-bottom-transition" scrollable>
+        <v-card v-if="activeSpot" class="rounded-xl overflow-hidden">
+          <v-toolbar color="primary" dark flat>
+            <v-toolbar-title class="font-weight-bold">{{ activeSpot.name }}</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-btn icon @click="dialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar>
+
+          <v-card-text class="pa-2 bg-grey-lighten-4" style="max-height: 70vh;">
+            <v-img :src="activeSpot.img" class="rounded-lg w-100" style="height: auto;"></v-img>
+
+            <div v-if="activeSpot.description" class="pa-4 text-body-1">
+              {{ activeSpot.description }}
+            </div>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions class="bg-white justify-center py-4">
+            <v-btn color="primary" variant="tonal" rounded="xl" @click="dialog = false" class="px-8">
+              {{ locale === 'zh' ? '關閉視窗' : 'Close' }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
       <v-container id="route" class="py-16">
         <h2 class="text-h4 text-center mb-12 font-weight-bold">{{ $t('route.title') }}</h2>
         <v-timeline align="start">
@@ -100,7 +147,7 @@
             <v-icon color="primary" class="mr-2">mdi-information-outline</v-icon>
             <span class="text-caption">{{ $t('map.tip') }}</span>
             <v-spacer />
-            <v-btn variant="text" color="primary" prepend-icon="mdi-map-marker" href="https://maps.google.com" target="_blank">{{ $t('map.openBtn') }}</v-btn>
+            <v-btn variant="text" color="primary" prepend-icon="mdi-map-marker" href="#" target="_blank">{{ $t('map.openBtn') }}</v-btn>
           </v-card-actions>
         </v-card>
       </v-container>
@@ -109,17 +156,8 @@
         <v-row justify="center">
           <v-col cols="12" md="10" lg="8">
             <h2 class="text-h4 text-center mb-10 font-weight-bold">{{ $t('video.title') }}</h2>
-      
             <v-responsive :aspect-ratio="16/9" class="elevation-12 rounded-lg overflow-hidden">
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/jANEtHV4K90?rel=0"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen
-            ></iframe>
+              <iframe width="100%" height="100%" src="https://www.youtube.com/embed/jANEtHV4K90?rel=0" frameborder="0" allowfullscreen></iframe>
             </v-responsive>
           </v-col>
         </v-row>
@@ -179,20 +217,27 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import schoolMapImg from '@/assets/school-map.png'
 
 const { locale } = useI18n()
 const drawer = ref(false)
 
-const toggleLang = () => {
-  locale.value = locale.value === 'zh' ? 'en' : 'zh'
-}
+// 控制彈窗
+const dialog = ref(false)
+const activeSpot = ref<any>(null)
+
+const toggleLang = () => { locale.value = locale.value === 'zh' ? 'en' : 'zh' }
 
 const scrollTo = (id: string) => {
   const el = document.querySelector(id) as HTMLElement | null
-  if (el) {
-    window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' })
-  }
+  if (el) window.scrollTo({ top: el.offsetTop - 64, behavior: 'smooth' })
   drawer.value = false
+}
+
+// 點擊標記點的動作
+const openSpot = (spot: any) => {
+  activeSpot.value = spot
+  dialog.value = true
 }
 
 const photos = [
@@ -204,83 +249,68 @@ const photos = [
   new URL('@/assets/cover-06.jpg', import.meta.url).href,
   new URL('@/assets/cover-07.jpg', import.meta.url).href,
 ]
+
+// 互動地圖座標數據
+const hotspots = ref([
+  { id: 'A', name: 'Block A Restoration (Completed)', top: '43%', left: '84%', img: new URL('@/assets/hover-a.png', import.meta.url).href },
+  { id: 'B', name: 'MMLL Transformation (Planned)', top: '36%', left: '69%', img: new URL('@/assets/hover-b.png', import.meta.url).href },
+  { id: 'C', name: 'Indoor Activity Center Improvements', top: '31%', left: '36%', img: new URL('@/assets/hover-c.png', import.meta.url).href },
+  { id: 'D1', name: 'Classroom Modernization (Planned)', top: '43%', left: '53%', img: new URL('@/assets/hover-d.png', import.meta.url).href },
+  { id: 'D2', name: 'Classroom Modernization (South Wing)', top: '75%', left: '22%', img: new URL('@/assets/hover-d.png', import.meta.url).href },
+])
 </script>
 
 <style scoped>
+.v-main { padding-top: 0 !important; }
+.w-100 { width: 100% !important; }
+.text-left { text-align: left !important; justify-content: flex-start !important; }
 
-.v-main {
-  padding-top: 0 !important;
-}
-.w-100 {
-  width: 100% !important;
-}
-.text-left {
-  text-align: left !important;
-  justify-content: flex-start !important;
-}
+/* Carousel Cross-fade */
+:deep(.v-window-item--active) { transition: opacity 1.5s ease-in-out !important; }
+:deep(.v-window__container) { transition: none !important; }
 
-/* 強化淡入淡出效果，令佢更 Slow 同更 Smooth */
-:deep(.v-window-item--active) {
-  transition: opacity 1.5s ease-in-out !important;
-}
+/* Interactive Map Styles */
+.interactive-map-wrapper { position: relative; max-width: 1000px; width: 100%; }
+.hotspot-trigger { position: absolute; transform: translate(-50%, -50%); z-index: 5; }
+.marker-pulse-effect { animation: marker-glow 2s infinite; border: 2px solid white !important; }
 
-:deep(.v-window__container) {
-  transition: none !important; /* 停用原本嘅左右滑動動畫 */
+@keyframes marker-glow {
+  0% { box-shadow: 0 0 0 0 rgba(var(--v-theme-primary), 0.8); }
+  70% { box-shadow: 0 0 0 15px rgba(var(--v-theme-primary), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--v-theme-primary), 0); }
 }
 
-.w-100 {
-  width: 100% !important;
-}
-
-/* 1. 按鈕整體的脈衝效果 (主要係發光同輕微放大) */
-.pulse-btn {
-  animation: pulse 2s infinite;
-  transform-origin: center center;
-  /* 確保從中心放大 */
-}
-
-/* 2. 針對 Icon 的跳動效果 (更明顯的縮放) */
-.icon-pulse {
-  animation: icon-jump 1s infinite alternate;
-  /* 來回跳動 */
-}
-
-/* --- 動畫定義 (Keyframes) --- */
-
-/* 按鈕總體 Pulse：主要是陰影擴散，令掣望落更「浮」 */
+/* Pulse Button Styles ... (保持你原本的 CSS) */
+.pulse-btn { animation: pulse 2s infinite; transform-origin: center center; }
 @keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(var(--v-theme-secondary), 0.7);
-    /* 開始時無陰影 */
-    transform: scale(1);
-    /* 原始大小 */
-  }
-
-  70% {
-    box-shadow: 0 0 0 15px rgba(var(--v-theme-secondary), 0);
-    /* 擴散並變透明 */
-    transform: scale(1.03);
-    /* 輕微放大 */
-  }
-
-  100% {
-    box-shadow: 0 0 0 0 rgba(var(--v-theme-secondary), 0);
-    /* 陰影消失 */
-    transform: scale(1);
-    /* 回復大小 */
-  }
+  0% { box-shadow: 0 0 0 0 rgba(var(--v-theme-secondary), 0.7); transform: scale(1); }
+  70% { box-shadow: 0 0 0 15px rgba(var(--v-theme-secondary), 0); transform: scale(1.03); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--v-theme-secondary), 0); transform: scale(1); }
 }
 
-/* Icon 跳動：更明顯的縮放，增加動感 */
-@keyframes icon-jump {
-  0% {
-    transform: scale(1);
-  }
+/* 確保彈出的圖片唔會大過個螢幕 */
+.v-card img {
+  max-width: 100%;
+  height: auto !important;
+  /* 強制保持比例 */
+  display: block;
+}
 
-  100% {
-    transform: scale(1.3);
-  }
+/* 美化 Dialog 入面的捲軸 (Chrome/Safari) */
+:deep(.v-card-text::-webkit-scrollbar) {
+  width: 8px;
+}
 
-  /* 縮放 30% */
+:deep(.v-card-text::-webkit-scrollbar-track) {
+  background: #f1f1f1;
+}
+
+:deep(.v-card-text::-webkit-scrollbar-thumb) {
+  background: #888;
+  border-radius: 4px;
+}
+
+:deep(.v-card-text::-webkit-scrollbar-thumb:hover) {
+  background: #555;
 }
 </style>
