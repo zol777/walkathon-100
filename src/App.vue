@@ -62,7 +62,10 @@
         <h2 class="text-h4 mb-6 font-weight-bold">{{ $t('nav.details') }}</h2>
         <v-row justify="center">
           <v-col cols="12" md="8">
-            <p class="text-body-1 text-grey-darken-1">（{{ $t('details.caption') }}）</p>
+            <p class="text-body-1 text-grey-darken-1">{{ $t('details.caption01') }}</p><br/>
+            <p class="text-body-1 text-grey-darken-1">{{ $t('details.caption02') }}</p>
+            <p class="text-body-1 text-grey-darken-1">{{ $t('details.caption03') }}</p>
+            <p class="text-body-1 text-grey-darken-1">{{ $t('details.caption04') }}</p>
           </v-col>
         </v-row>
       </v-container>
