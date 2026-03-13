@@ -2,12 +2,11 @@ import { createI18n } from 'vue-i18n'
 
 const messages = {
   en: {
-    nav: { details: 'Details', route: 'Route' , map: 'Map', video: 'Promotional Video'},
+    nav: { details: 'Together we dream, together we build', route: 'Route' , map: 'Map', video: 'Promotional Video'},
     details:{ 
-      caption01: 'Together we dream, together we build.',
-      caption02: 'For a century, under the stewardship of the Salesian Society, St. Louis School has continuously journeyed alongside our youth. Our Founder St. John Bosco’s profound “Dream at Nine” kindled a lifelong mission for the young. Over these hundred years, generations of devoted priests and educators have carried this dream forward. Nurturing our students with loving-kindness, they have cultivated the seeds of Scientia et Pietas deep within the heart of every Aloysian.',
-      caption03: 'Standing at this centenary milestone, we continue to uphold the Preventive System of Education as our guiding compass. Rooted in this visionary legacy, we embrace the future with innovation. As we unite all staff, students, and alumni, let us honour our theme: “Together we dream, together we build”. Through this shared endeavour, we will carry the Aloysian spirit forward and write the next glorious chapter together.',
-      caption04: 'The 2027 School Walkathon will be held on X X, 2027. All students, teachers, and parents are encouraged to join us for a day of fun and fundraising!' },
+      caption01: 'For a century, under the stewardship of the Salesian Society, St. Louis School has continuously journeyed alongside our youth. Our Founder St. John Bosco’s profound “Dream at Nine” kindled a lifelong mission for the young. Over these hundred years, generations of devoted priests and educators have carried this dream forward. Nurturing our students with loving-kindness, they have cultivated the seeds of Scientia et Pietas deep within the heart of every Aloysian.',
+      caption02: 'Standing at this centenary milestone, we continue to uphold the Preventive System of Education as our guiding compass. Rooted in this visionary legacy, we embrace the future with innovation. As we unite all staff, students, and alumni, let us honour our theme: “Together we dream, together we build”. Through this shared endeavour, we will carry the Aloysian spirit forward and write the next glorious chapter together.',
+      caption03: 'The 2027 School Walkathon will be held on X X, 2027. All students, teachers, and parents are encouraged to join us for a day of fun and fundraising!' },
     hero: { 
       title: 'School Walkathon 2027', 
       subtitle: 'Walking together for a better future',
@@ -35,12 +34,11 @@ const messages = {
     }
   },
   zh: {
-    nav: { details: '活動詳情', route: '活動路線', map: '路線地圖', video: '活動宣傳片'},
+    nav: { details: '百載同行  弘夢鼎新', route: '活動路線', map: '路線地圖', video: '活動宣傳片'},
     details: { 
-      caption01: '百載同行  弘夢鼎新',
-      caption02: '自慈幼會承命百載，聖類斯與莘莘學子攜手同行。昔日會祖聖鮑思高神父的「九歲奇夢」，點燃了奉獻青年教育的明燈；世紀以來，無數神長與老師承傳此夢，深耕學子心田，以『學問與虔誠』為養分，化雨春風，培育代代樑木。',
-      caption03: '欣逢百週年慶典，我校繼續恪守『預防教育法』之遺訓，在先賢的根基上弘揚奇夢，矢志鼎新。願藉此慶典，凝聚師生校友之情誼，讓我們繼續同心築夢，共創新猷，使聖類斯精神薪火相傳，共譜輝煌新章。',
-      caption04: '2027 學校步行籌款活動將於 2027 年 X 月 X 日舉行，歡迎全校師生及家長踴躍參加！'},
+      caption01: '自慈幼會承命百載，聖類斯與莘莘學子攜手同行。昔日會祖聖鮑思高神父的「九歲奇夢」，點燃了奉獻青年教育的明燈；世紀以來，無數神長與老師承傳此夢，深耕學子心田，以『學問與虔誠』為養分，化雨春風，培育代代樑木。',
+      caption02: '欣逢百週年慶典，我校繼續恪守『預防教育法』之遺訓，在先賢的根基上弘揚奇夢，矢志鼎新。願藉此慶典，凝聚師生校友之情誼，讓我們繼續同心築夢，共創新猷，使聖類斯精神薪火相傳，共譜輝煌新章。',
+      caption03: '2027 學校步行籌款活動將於 2027 年 X 月 X 日舉行，歡迎全校師生及家長踴躍參加！'},
     hero: { 
       title: '2027 學校步行籌款', 
       subtitle: '攜手同行，共創未來',
