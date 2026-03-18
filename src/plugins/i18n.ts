@@ -81,7 +81,7 @@ const messages = {
 
 const i18n = createI18n({
   legacy: false, // 呢行一定要有
-  locale: 'zh',
+  locale: 'en',
   fallbackLocale: 'en',
   messages,
 })

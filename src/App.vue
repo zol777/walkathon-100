@@ -251,12 +251,63 @@ const photos = [
 ]
 
 // 互動地圖座標數據
+// 定義更新後的 3D 地圖標記點
 const hotspots = ref([
-  { id: 'A', name: 'Block A Restoration (Completed)', top: '43%', left: '84%', img: new URL('@/assets/hover-a.png', import.meta.url).href },
-  { id: 'B', name: 'MMLL Transformation (Planned)', top: '36%', left: '69%', img: new URL('@/assets/hover-b.png', import.meta.url).href },
-  { id: 'C', name: 'Indoor Activity Center Improvements', top: '31%', left: '36%', img: new URL('@/assets/hover-c.png', import.meta.url).href },
-  { id: 'D1', name: 'Classroom Modernization (Planned)', top: '43%', left: '53%', img: new URL('@/assets/hover-d.png', import.meta.url).href },
-  { id: 'D2', name: 'Classroom Modernization (South Wing)', top: '75%', left: '22%', img: new URL('@/assets/hover-d.png', import.meta.url).href },
+  // A 點：位於最左側石灰色圓頂建築（A Block）的頂部
+  {
+    id: 'A',
+    name: 'Block A Restoration (Completed)',
+    top: '30%',  // 重新計算的頂部位置
+    left: '18%', // 重新計算的左側位置
+    img: new URL('@/assets/hover-a.png', import.meta.url).href
+  },
+
+  // B 點：位於左側籃球場（MMLL/IAC 地下）的中心
+  {
+    id: 'B',
+    name: 'MMLL Transformation (Planned)',
+    top: '65%',
+    left: '25%',
+    img: new URL('@/assets/hover-b.png', import.meta.url).href
+  },
+
+  // C 點：位於 IAC 新翼大樓下方（C 標記處）
+  {
+    id: 'C',
+    name: 'Indoor Activity Center Improvements',
+    top: '90%',
+    left: '60%',
+    img: new URL('@/assets/hover-c.png', import.meta.url).href
+  },
+
+  // --- 以下三個 D 點皆顯示 hover-d.png ---
+
+  // D1 點：位於 IAC 新翼（綠色屋頂）大樓的地下層（D1 標記處）
+  {
+    id: 'D1',
+    name: 'Classroom Modernization (Planned)',
+    top: '60%',
+    left: '32%',
+    img: new URL('@/assets/hover-d.png', import.meta.url).href
+  },
+
+  // D2 點：位於最右側高樓（D Block/南翼）大樓的地下層（D2 標記處）
+  {
+    id: 'D3',
+    name: 'Classroom Modernization (South Wing)',
+    top: '56%',
+    left: '66%',
+    img: new URL('@/assets/hover-d.png', import.meta.url).href
+  },
+
+  // D3 點：位於 IAC 新翼大樓二樓/三樓中間層（DR 標記處）
+  {
+    id: 'D2',
+    name: 'Classroom Modernization (Central Wing)',
+    top: '71%',
+    left: '52%',
+    img: new URL('@/assets/hover-d.png', import.meta.url).href
+  },
 ])
 </script>
 
