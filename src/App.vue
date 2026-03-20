@@ -1,10 +1,13 @@
 <template>
   <v-app shadow>
-    <v-app-bar color="primary" elevation="1" app>
-      <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none" />
-      <v-toolbar-title class="font-weight-bold">{{ $t('hero.title') }}</v-toolbar-title>
+    <v-app-bar :color="isScrolling ? 'primary' : 'transparent'" :elevation="isScrolling ? 4 : 0" flat app
+      class="transition-swing">
+      <v-app-bar-nav-icon @click="drawer = !drawer" class="d-md-none" :class="{ 'text-white': !isScrolling }" />
+      <v-toolbar-title class="font-weight-bold" :class="{ 'text-white': !isScrolling }">
+        {{ $t('hero.title') }}
+      </v-toolbar-title>
       <v-spacer />
-      
+
       <div class="d-none d-md-flex">
         <v-btn variant="text" @click="scrollTo('#details')">{{ $t('nav.details') }}</v-btn>
         <v-btn variant="text" @click="scrollTo('#interactive-map')">{{ $t('nav.renovation') }}</v-btn>
@@ -12,10 +15,6 @@
         <v-btn variant="text" @click="scrollTo('#map')">{{ $t('nav.map') }}</v-btn>
         <v-btn variant="text" @click="scrollTo('#video')">{{ $t('nav.video') }}</v-btn>
       </div>
-
-      <v-btn icon @click="toggleLang" class="ml-2">
-        <v-icon>mdi-translate</v-icon>
-      </v-btn>
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" temporary>
@@ -29,7 +28,7 @@
         <v-list-item 
           prepend-icon="mdi-translate" 
           @click="toggleLang" 
-          :title="locale === 'zh' ? 'English' : '中文'" 
+          :title="$t('button.locale')" 
         />
       </v-list>
     </v-navigation-drawer>
@@ -74,9 +73,10 @@
       <v-sheet color="grey-lighten-5" class="py-16" id="interactive-map">
         <v-container>
           <h2 class="text-h4 text-center mb-10 font-weight-bold">{{ $t('nav.renovation') }}</h2>
-          <div class="interactive-map-wrapper mx-auto elevation-10 rounded-lg bg-white">
 
-            <v-img :src="schoolMapImg" cover class="w-100 base-map"></v-img>
+          <div class="interactive-map-wrapper mx-auto">
+
+            <v-img :src="schoolMapImg" class="w-100 base-map" alt="School Map"></v-img>
 
             <div v-for="spot in hotspots" :key="spot.id" class="hotspot-trigger"
               :style="{ top: spot.top, left: spot.left }">
@@ -88,29 +88,23 @@
         </v-container>
       </v-sheet>
 
-      <v-dialog v-model="dialog" max-width="1000" transition="dialog-bottom-transition" scrollable>
-        <v-card v-if="activeSpot" class="rounded-xl overflow-hidden">
+      <v-dialog v-model="dialog" max-width="700" transition="scale-transition" scrollable>
+        <v-card v-if="activeSpot" class="rounded-xl overflow-hidden elevation-24">
           <v-toolbar color="primary" dark flat>
-            <v-toolbar-title class="font-weight-bold">{{ activeSpot.name }}</v-toolbar-title>
+            <v-toolbar-title class="font-weight-bold text-subtitle-1">
+              {{ activeSpot.name }}
+            </v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
+            <v-btn icon @click="dialog = false"><v-icon>mdi-close</v-icon></v-btn>
           </v-toolbar>
 
-          <v-card-text class="pa-2 bg-grey-lighten-4" style="max-height: 70vh;">
-            <v-img :src="activeSpot.img" class="rounded-lg w-100" style="height: auto;"></v-img>
-
-            <div v-if="activeSpot.description" class="pa-4 text-body-1">
-              {{ activeSpot.description }}
-            </div>
+          <v-card-text class="pa-1 bg-grey-lighten-4" style="max-height: 65vh;">
+            <v-img :src="activeSpot.img" class="rounded-lg w-100" contain></v-img>
           </v-card-text>
 
-          <v-divider></v-divider>
-
-          <v-card-actions class="bg-white justify-center py-4">
-            <v-btn color="primary" variant="tonal" rounded="xl" @click="dialog = false" class="px-8">
-              {{ locale === 'zh' ? '關閉視窗' : 'Close' }}
+          <v-card-actions class="bg-white justify-center py-3">
+            <v-btn color="primary" variant="tonal" rounded="xl" @click="dialog = false" class="px-6">
+              {{ $t('button.close') }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -215,9 +209,24 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import schoolMapImg from '@/assets/school-map.png'
+
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const isScrolling = ref(false)
+
+const handleScroll = () => {
+  isScrolling.value = window.scrollY > 100
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 
 const { locale } = useI18n()
 const drawer = ref(false)
@@ -250,19 +259,15 @@ const photos = [
   new URL('@/assets/cover-07.jpg', import.meta.url).href,
 ]
 
-// 互動地圖座標數據
-// 定義更新後的 3D 地圖標記點
+
 const hotspots = ref([
-  // A 點：位於最左側石灰色圓頂建築（A Block）的頂部
   {
     id: 'A',
     name: 'Block A Restoration (Completed)',
-    top: '30%',  // 重新計算的頂部位置
-    left: '18%', // 重新計算的左側位置
+    top: '30%',  
+    left: '18%',
     img: new URL('@/assets/hover-a.png', import.meta.url).href
   },
-
-  // B 點：位於左側籃球場（MMLL/IAC 地下）的中心
   {
     id: 'B',
     name: 'MMLL Transformation (Planned)',
@@ -270,8 +275,6 @@ const hotspots = ref([
     left: '25%',
     img: new URL('@/assets/hover-b.png', import.meta.url).href
   },
-
-  // C 點：位於 IAC 新翼大樓下方（C 標記處）
   {
     id: 'C',
     name: 'Indoor Activity Center Improvements',
@@ -279,10 +282,6 @@ const hotspots = ref([
     left: '60%',
     img: new URL('@/assets/hover-c.png', import.meta.url).href
   },
-
-  // --- 以下三個 D 點皆顯示 hover-d.png ---
-
-  // D1 點：位於 IAC 新翼（綠色屋頂）大樓的地下層（D1 標記處）
   {
     id: 'D1',
     name: 'Classroom Modernization (Planned)',
@@ -290,8 +289,6 @@ const hotspots = ref([
     left: '32%',
     img: new URL('@/assets/hover-d.png', import.meta.url).href
   },
-
-  // D2 點：位於最右側高樓（D Block/南翼）大樓的地下層（D2 標記處）
   {
     id: 'D3',
     name: 'Classroom Modernization (South Wing)',
@@ -299,8 +296,6 @@ const hotspots = ref([
     left: '66%',
     img: new URL('@/assets/hover-d.png', import.meta.url).href
   },
-
-  // D3 點：位於 IAC 新翼大樓二樓/三樓中間層（DR 標記處）
   {
     id: 'D2',
     name: 'Classroom Modernization (Central Wing)',
@@ -363,5 +358,16 @@ const hotspots = ref([
 
 :deep(.v-card-text::-webkit-scrollbar-thumb:hover) {
   background: #555;
+}
+
+.base-map {
+  /* 呢種投影會跟住建築物嘅輪廓，而唔係長方形邊框 */
+  filter: drop-shadow(0px 10px 8px rgba(0, 0, 0, 0.1));
+}
+
+.interactive-map-wrapper {
+  position: relative;
+  /* 確保唔好有背景色 */
+  background: transparent;
 }
 </style>
